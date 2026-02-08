@@ -41,10 +41,7 @@ head:
   - [6,  1, Conv, [256, 1, 1]]   # P4 → 256
   - [4,  1, Conv, [256, 1, 1]]   # P3 → 256
 
-  # pack features (legal for parser)
-  - [[-1, -2, -3], 1, Concat, [1]]
+  # BiFPN neck
+  - [[-1, -2, -3], 1, BiFPN, [256, 2]]
 
-  # BiFPN takes single input (tuple unpack inside)
-  - [-1, 1, BiFPN, [256, 2]]
-
-  - [-1, 1, Detect, [nc]]
+  - [[-1, -2, -3], 1, Detect, [nc]]
