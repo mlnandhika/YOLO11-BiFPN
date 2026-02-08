@@ -18,6 +18,7 @@ Examples:
 """
 from .bifpn import BiFPN
 from .common import GetItem
+from .common import Pack
 
 from .block import (
     C1,
@@ -191,4 +192,5 @@ __all__ = (
     "v10Detect",
     "BiFPN",
     "GetItem",
+    "Pack",
 )

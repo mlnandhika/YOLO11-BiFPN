@@ -36,16 +36,16 @@ head:
   - [6,  1, Conv, [256, 1, 1]]   # 12: P4
   - [4,  1, Conv, [256, 1, 1]]   # 13: P3
 
-  # pack features
-  - [[13, 12, 11], 1, Concat, [1]]   # 14
+  # pack features 
+  - [[13, 12, 11], 1, Pack, []]  # 14: [P3, P4, P5]
 
   # BiFPN neck
-  - [14, 1, BiFPN, [256, 2]]         # 15 → (p3,p4,p5)
+  - [14, 1, BiFPN, [256, 2]]     # 15 => (p3,p4,p5)
 
   # unpack
-  - [15, 1, GetItem, [0]]            # 16: P3
-  - [15, 1, GetItem, [1]]            # 17: P4
-  - [15, 1, GetItem, [2]]            # 18: P5
+  - [15, 1, GetItem, [0]]        # 16: P3
+  - [15, 1, GetItem, [1]]        # 17: P4
+  - [15, 1, GetItem, [2]]        # 18: P5
 
-  # Detect YOLO ASLI
+  # Detect
   - [[16, 17, 18], 1, Detect, [nc]]

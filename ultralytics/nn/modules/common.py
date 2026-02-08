@@ -7,3 +7,7 @@ class GetItem(nn.Module):
 
     def forward(self, x):
         return x[self.idx]
+
+class Pack(nn.Module):
+    def forward(self, x):
+        return x
