@@ -63,7 +63,9 @@ class BiFPN(nn.Module):
             [BiFPNLayer(ch) for _ in range(n_layers)]
         )
 
-    def forward(self, p3, p4, p5):
+    def forward(self, x):
+        # x = [P3, P4, P5]
+        p3, p4, p5 = x
         for layer in self.layers:
             p3, p4, p5 = layer(p3, p4, p5)
-        return p3, p4, p5
+        return [p3, p4, p5]
