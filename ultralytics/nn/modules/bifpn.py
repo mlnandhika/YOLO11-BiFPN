@@ -1,18 +1,16 @@
 import torch
 import torch.nn as nn
 
+
 class ConvBNAct(nn.Module):
     def __init__(self, c1, c2):
         super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv2d(c1, c2, 3, padding=1, bias=False),
-            nn.BatchNorm2d(c2),
-            nn.SiLU()
-        )
+        self.conv = nn.Sequential(nn.Conv2d(c1, c2, 3, padding=1, bias=False), nn.BatchNorm2d(c2), nn.SiLU())
 
     def forward(self, x):
         return self.conv(x)
-    
+
+
 class WeightedAdd(nn.Module):
     def __init__(self, n):
         super().__init__()
@@ -23,6 +21,7 @@ class WeightedAdd(nn.Module):
         w = torch.relu(self.w)
         w = w / (w.sum() + self.eps)
         return sum(w[i] * inputs[i] for i in range(len(inputs)))
+
 
 class BiFPNLayer(nn.Module):
     def __init__(self, ch):
@@ -56,12 +55,11 @@ class BiFPNLayer(nn.Module):
 
         return p3_out, p4_out, p5_out
 
+
 class BiFPN(nn.Module):
     def __init__(self, ch, n_layers=2):
         super().__init__()
-        self.layers = nn.ModuleList(
-            [BiFPNLayer(ch) for _ in range(n_layers)]
-        )
+        self.layers = nn.ModuleList([BiFPNLayer(ch) for _ in range(n_layers)])
 
     def forward(self, p3, p4, p5):
         for layer in self.layers:
