@@ -1,14 +1,11 @@
 import torch
 import torch.nn as nn
 
+
 class ConvBNAct(nn.Module):
     def __init__(self, c1, c2):
         super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv2d(c1, c2, 3, padding=1, bias=False),
-            nn.BatchNorm2d(c2),
-            nn.SiLU()
-        )
+        self.conv = nn.Sequential(nn.Conv2d(c1, c2, 3, padding=1, bias=False), nn.BatchNorm2d(c2), nn.SiLU())
 
     def forward(self, x):
         return self.conv(x)
